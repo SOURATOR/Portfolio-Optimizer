@@ -107,16 +107,16 @@ selected_stress = st.selectbox("Choose a historical crisis to simulate:", list(s
 start_date, end_date = stress_periods[selected_stress]
 stress_ret, stress_vol = run_stress_test(selected_tickers, start_date, end_date, optimal_weights)
 
-st.subheader(f"📉 Stress Test Results – {selected_stress}")
-st.markdown(f"""
-- 🔻 **Portfolio Return:** {stress_ret:.2%}
-- 📉 **Volatility during stress:** {stress_vol:.2%}
-""")
-
-fig_stress = Nifty50_vs_stress_Portfolio(selected_tickers, start_date, end_date, optimal_weights)
-st.pyplot(fig_stress)
-
-st.info("Stress testing helps you understand how your portfolio might behave during market shocks.")
+if stress_ret is None or stress_vol is None:
+    st.error("⚠️ Stress test failed — one or more stocks had no data during the selected period. Try a different set of stocks or another crisis period.")
+else:
+    st.subheader(f"📉 Stress Test Results – {selected_stress}")
+    st.markdown(f"""
+    - 🔻 **Portfolio Return:** {stress_ret:.2%}
+    - 📉 **Volatility during stress:** {stress_vol:.2%}
+    """)
+    fig_stress = Nifty50_vs_stress_Portfolio(selected_tickers, start_date, end_date, optimal_weights)
+    st.pyplot(fig_stress)
 
 # -------------------------
 # Footer / Education
