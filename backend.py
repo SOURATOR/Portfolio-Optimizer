@@ -74,22 +74,25 @@ def Nifty50_vs_optimized_Portfolio(tickers, optimal_weights):
     ax.grid(True)
 
     return fig
-def Nifty50_vs_stress_Portfolio(tickers,start_date,end_date,optimal_weights):
+def Nifty50_vs_stress_Portfolio(tickers, start_date, end_date, optimal_weights):
     nifty50_data = get_data('^NSEI', start=start_date, end=end_date)
     nifty50_daily = nifty50_data.pct_change().dropna()
     nifty50_cumulative = (1 + nifty50_daily).cumprod()
+
     stress_data = get_data(tickers, start=start_date, end=end_date)
     stress_returns = stress_data.pct_change().dropna()
     portfolio_daily_returns = stress_returns.dot(optimal_weights)
-    stress_portfolio_return = (1 + portfolio_daily_returns).prod()
-    fig,ax=plt.subplots(figsize=(10,6))
+    portfolio_cumulative = (1 + portfolio_daily_returns).cumprod()
+
+    fig, ax = plt.subplots(figsize=(10,6))
     ax.plot(nifty50_cumulative, label='Nifty 50 Index', linewidth=2, color='red')
-    ax.plot(stress_portfolio_return, label='Stress Portfolio', linewidth=2, color='blue')
+    ax.plot(portfolio_cumulative, label='Stress Portfolio', linewidth=2, color='blue')
     ax.set_xlabel("Date")
     ax.set_ylabel("Cumulative Returns")
-    ax.set_title("Nifty 50 vs Stress Portfolio (3 Years)")
+    ax.set_title("Nifty 50 vs Stress Portfolio")
     ax.legend()
     ax.grid(True)
+
     return fig
 def plot_weights_pie(tickers, weights):
     fig, ax = plt.subplots()
