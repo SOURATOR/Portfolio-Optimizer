@@ -46,6 +46,9 @@ def calculate_portfolio_metrics(annual_returns,optimized_weights,cov_matrix,risk
 def run_stress_test(tickers, start_date, end_date, optimal_weights):
     stress_data = get_data(tickers, start=start_date, end=end_date)
     stress_returns = stress_data.pct_change().dropna()
+    if stress_returns.empty:
+         return None, None
+   
     portfolio_daily_returns = stress_returns.dot(optimal_weights)
     stress_portfolio_return = (1 + portfolio_daily_returns).prod() - 1
     stress_portfolio_volatility = portfolio_daily_returns.std() * np.sqrt(252)
