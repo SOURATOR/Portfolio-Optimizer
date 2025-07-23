@@ -14,7 +14,7 @@ from backend import *
 # -------------------------
 # Title + Introduction
 # -------------------------
-st.set_page_config(page_title="Smart Portfolio Optimizer", layout="wide")
+st.set_page_config(page_title="My Portfolio Optimizer", layout="wide")
 st.title("📊 Smart Portfolio Optimizer for Indian Stocks")
 
 st.markdown("""
@@ -34,8 +34,18 @@ st.divider()
 # -------------------------
 st.header("🔎 Step 1: Select Stocks")
 
-nifty_50_list = ['RELIANCE.NS', 'TCS.NS', 'INFY.NS', 'HDFCBANK.NS', 'LT.NS', 'ICICIBANK.NS', 'ITC.NS', 'KOTAKBANK.NS', 'SBIN.NS', 'AXISBANK.NS', 'HINDUNILVR.NS']
-
+nifty_50_list = [
+    "ADANIENT.NS", "ADANIPORTS.NS", "ASIANPAINT.NS", "AXISBANK.NS", "BAJAJ-AUTO.NS",
+    "BAJFINANCE.NS", "BAJAJFINSV.NS", "BPCL.NS", "BHARTIARTL.NS", "BRITANNIA.NS",
+    "CIPLA.NS", "COALINDIA.NS", "DIVISLAB.NS", "DRREDDY.NS", "EICHERMOT.NS",
+    "GRASIM.NS", "HCLTECH.NS", "HDFCBANK.NS", "HDFCLIFE.NS", "HEROMOTOCO.NS",
+    "HINDALCO.NS", "HINDUNILVR.NS", "ICICIBANK.NS", "ITC.NS", "INDUSINDBK.NS",
+    "INFY.NS", "JSWSTEEL.NS", "KOTAKBANK.NS", "LT.NS", "M&M.NS", "MARUTI.NS",
+    "NTPC.NS", "NESTLEIND.NS", "ONGC.NS", "POWERGRID.NS", "RELIANCE.NS",
+    "SBILIFE.NS", "SBIN.NS", "SUNPHARMA.NS", "TCS.NS", "TATACONSUM.NS",
+    "TATAMOTORS.NS", "TATASTEEL.NS", "TECHM.NS", "TITAN.NS", "ULTRACEMCO.NS",
+    "UPL.NS", "WIPRO.NS"
+]
 selected_tickers = st.multiselect(
     "Choose 3 to 8 stocks from the Nifty 50:",
     options=nifty_50_list,
