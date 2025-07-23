@@ -49,7 +49,7 @@ nifty_50_list = [
 selected_tickers = st.multiselect(
     "Choose 3 to 8 stocks from the Nifty 50:",
     options=nifty_50_list,
-    default=['RELIANCE.NS', 'TCS.NS', 'HDFCBANK.NS']
+    default=[]
 )
 
 # Cap the number of selections
