@@ -99,7 +99,7 @@ st.header("⚠️ Optional: Stress Test Your Portfolio")
 stress_periods = {
     "COVID-19 Crash (2020)": ("2020-02-01", "2020-04-30"),
     "Russia-Ukraine War (2022)": ("2022-02-01", "2022-04-30"),
-    "2022 Tech Selloff": ("2022-01-01", "2022-06-30")
+    "Demonetization (2016)": ("2016-11-01", "2017-01-31")
 }
 
 selected_stress = st.selectbox("Choose a historical crisis to simulate:", list(stress_periods.keys()))
