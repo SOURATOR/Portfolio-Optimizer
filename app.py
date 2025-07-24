@@ -14,15 +14,15 @@ from backend import *
 # -------------------------
 # Title + Introduction
 # -------------------------
-st.set_page_config(page_title="My Portfolio Optimizer", layout="wide")
-st.title("📊 Smart Portfolio Optimizer for Indian Stocks")
+st.set_page_config(page_title="Portfolio Optimizer", layout="wide")
+st.title("Portfolio Optimizer for Indian Stocks")
 
 st.markdown("""
-Welcome to the **Smart Portfolio Optimizer**! 🚀
+Welcome to the **Portfolio Optimizer**! 
 
-- 📌 Select Indian stocks (Nifty 50) to build your custom portfolio
-- 📈 See optimized weights, performance metrics & visual charts
-- 🛡️ Stress test your portfolio across historical events like COVID-19
+- Select Indian stocks (Nifty 50) to build your custom portfolio
+- See optimized weights, performance metrics & visual charts
+- Stress test your portfolio across historical events like COVID-19
 
 
 """)
@@ -32,7 +32,7 @@ st.divider()
 # -------------------------
 # Stock Selection
 # -------------------------
-st.header("🔎 Step 1: Select Stocks")
+st.header("Step 1: Select Stocks")
 
 nifty_50_list = [
     "ADANIENT.NS", "ADANIPORTS.NS", "ASIANPAINT.NS", "AXISBANK.NS", "BAJAJ-AUTO.NS",
@@ -47,22 +47,22 @@ nifty_50_list = [
     "UPL.NS", "WIPRO.NS"
 ]
 selected_tickers = st.multiselect(
-    "Choose 3 to 8 stocks from the Nifty 50:",
+    "Choose 3 to 20 stocks from the Nifty 50:",
     options=nifty_50_list,
     default=[]
 )
 
 # Cap the number of selections
-if len(selected_tickers) < 3 or len(selected_tickers) > 8:
-    st.warning("Please select between 3 to 8 stocks to proceed.")
+if len(selected_tickers) < 3 or len(selected_tickers) > 20:
+    st.warning("Please select between 3 to 20 stocks to proceed.")
     st.stop()
 
 # -------------------------
 # Optimization
 # -------------------------
 
-st.header("🧮 Step 2: Portfolio Optimization")
-risk_free_rate = 0.04
+st.header("Step 2: Portfolio Optimization")
+risk_free_rate = 0.06
 
 data = get_data(selected_tickers, period="3y")
 annual_returns = calculate_annual_returns(data)
@@ -71,20 +71,20 @@ optimal_weights = optimize_portfolio(annual_returns, cov_matrix, risk_free_rate)
 opt_ret, opt_vol, opt_sharpe = calculate_portfolio_metrics(annual_returns, optimal_weights, cov_matrix, risk_free_rate)
 
 # Show Weights
-st.subheader("📊 Optimized Portfolio Weights")
+st.subheader("Optimized Portfolio Weights")
 fig_weights = plot_weights_pie(selected_tickers, optimal_weights)
 st.pyplot(fig_weights)
 
 # Show Cumulative Chart
-st.subheader("📈 Performance vs Nifty 50")
+st.subheader("Historical Performance of Portfolio vs Nifty 50 Index")
 fig_compare = Nifty50_vs_optimized_Portfolio(selected_tickers, optimal_weights)
 st.pyplot(fig_compare)
 
 # Metrics
 st.markdown(f"""
-- ✅ **Annual Return:** {opt_ret:.2%}
-- 📉 **Volatility:** {opt_vol:.2%}
-- 🏆 **Sharpe Ratio:** {opt_sharpe:.2f}
+-  **Annual Return:** {opt_ret:.2%}
+-  **Volatility:** {opt_vol:.2%}
+-  **Sharpe Ratio:** {opt_sharpe:.2f}
 
 *This portfolio is optimized to maximize the Sharpe Ratio using historical data.*
 """)
@@ -94,7 +94,7 @@ st.markdown(f"""
 # -------------------------
 
 st.divider()
-st.header("⚠️ Optional: Stress Test Your Portfolio")
+st.header("Stress Test Your Portfolio")
 
 stress_periods = {
     "COVID-19 Crash (2020)": ("2020-02-01", "2020-04-30"),
@@ -108,12 +108,12 @@ start_date, end_date = stress_periods[selected_stress]
 stress_ret, stress_vol = run_stress_test(selected_tickers, start_date, end_date, optimal_weights)
 
 if stress_ret is None or stress_vol is None:
-    st.error("⚠️ Stress test failed — one or more stocks had no data during the selected period. Try a different set of stocks or another crisis period.")
+    st.error("Stress test failed — one or more stocks had no data during the selected period. Try a different set of stocks or another crisis period.")
 else:
-    st.subheader(f"📉 Stress Test Results – {selected_stress}")
+    st.subheader(f"Stress Test Results – {selected_stress}")
     st.markdown(f"""
-    - 🔻 **Portfolio Return:** {stress_ret:.2%}
-    - 📉 **Volatility during stress:** {stress_vol:.2%}
+    - **Portfolio Return:** {stress_ret:.2%}
+    - **Volatility during stress:** {stress_vol:.2%}
     """)
     fig_stress = Nifty50_vs_stress_Portfolio(selected_tickers, start_date, end_date, optimal_weights)
     st.pyplot(fig_stress)
@@ -124,7 +124,7 @@ else:
 
 st.divider()
 st.markdown("""
-📘 *How this works:* This app uses Python + Streamlit + yFinance to pull real stock data and run portfolio optimization using the Sharpe Ratio.
+This app uses Python + Streamlit + yFinance to pull real stock data and run portfolio optimization using the Sharpe Ratio.
 Your selected stocks are optimized using scipy.optimize to maximize return per unit risk.
 
 """)
